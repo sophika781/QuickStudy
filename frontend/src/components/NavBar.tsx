@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { TextField } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,14 +12,21 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['+ Create', 'Login'];
 const settings = ['Profile', 'Your Decks', 'Logout'];
 
-function NavBar() {
+interface Props{
+  isLoggedIn: boolean;
+}
+
+function NavBar({isLoggedIn}: Props) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const navigate= useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -35,11 +43,14 @@ function NavBar() {
     setAnchorElUser(null);
   };
 
+  const Login= () => {
+    navigate("/login");
+  }
+
   return (
-    <AppBar position="fixed" className="nav-bar">
+    <AppBar position="fixed" className="nav-bar" elevation={0} sx={{borderBottom: '1px solid black'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{flexGrow: 20}}/>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
             <IconButton
               size="large"
@@ -74,65 +85,70 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            QuickStudy
-          </Typography>
+          <img src= "/s.png"/>
+            { isLoggedIn &&
+              <h3>QuickStudy</h3>
+            }
+          <TextField id="outlined-search" placeholder='Search for decks' type="search" InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{width: '50%', marginLeft: '10%'}} />
+          <Box sx={{flexGrow: 20}}/>
+          { isLoggedIn ? (
+            <>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', gap: '1em'} }}>
-            {pages.map((page) => (
               <Button
-                key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block', border: '1px solid black'}}
+                sx={{ my: 2, color: 'black', display: 'block', border: '1px solid black', marginRight: '10%'}}
               >
-                {page}
+                + Create
               </Button>
-            ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '1.1%' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, paddingLeft: '1em'}}>
+              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: '1.1%' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+        </>
+          ) : (
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', gap: '1em'} }}>
+              <Button
+                onClick={Login}
+                sx={{ my: 2, color: 'black', display: 'block', border: '1px solid black'}}
+              >
+                Login
+              </Button>    
           </Box>
+          )
+          }
         </Toolbar>
       </Container>
     </AppBar>

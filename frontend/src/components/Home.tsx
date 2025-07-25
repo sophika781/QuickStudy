@@ -1,16 +1,21 @@
-import * as React from 'react';
 import NavBar from './NavBar';
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
+import { useState } from 'react';
 
 function Home() {
+
+    const [isLoggedIn, setLoggedIn]= useState(false);
+
     return(
         <>
-        <NavBar/>
-        <Container className="context"></Container>
-        <Container className="landing-initial">
+        <NavBar isLoggedIn={isLoggedIn}/>
+        <Box className="context">
+        <Box className="landing-initial">
+            { !isLoggedIn &&
             <h1>QuickStudy</h1>
-        </Container>
-
+            }
+        </Box>
+        </Box>
         </>
     );
 }

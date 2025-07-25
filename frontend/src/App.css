@@ -1,18 +1,38 @@
 body{
     background-color: white;
+    font-family: 'Inter', 'sans-serif';
 }
 
+h2{
+    font-weight: 200;
+}
+
+img{
+    width: 65px;
+    height: 65px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 10px;
+}
 .nav-bar{
     background-color: white !important;
     color: black !important;
 }
 
 .context{
-    padding-top: 20%;
+    padding-top: 5%;
 }
 
 .landing-initial{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    border: 2px solid black;
+    padding: 20%;
+    margin: 2%;
+}
+
+.lr-buttons{
+    background-color: black !important;
+    color: white !important;
 }
