@@ -13,6 +13,7 @@ function Registration() {
                 <TextField placeholder= "First Name"/>
                 <TextField placeholder= "Last Name"/>
             </Box>
+            <TextField placeholder="Username"/>
             <TextField placeholder="Email Address"/>
             <TextField placeholder= "Password" />
             <TextField placeholder= "Retype Password" />
