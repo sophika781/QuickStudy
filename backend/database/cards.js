@@ -1,7 +1,6 @@
 const mongoose= require('mongoose');
 
 const cardSchema = new mongoose.Schema({
-  _id: String,
   deckId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'deck'
