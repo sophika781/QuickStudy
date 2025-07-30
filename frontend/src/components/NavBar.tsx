@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const pages = ['+ Create', 'Login'];
 const settings = ['Profile', 'Your Decks', 'Logout'];
@@ -24,6 +25,7 @@ interface Props{
 }
 
 function NavBar({isLoggedIn}: Props) {
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate= useNavigate();
