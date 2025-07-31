@@ -15,16 +15,17 @@ import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const pages = ['+ Create', 'Login'];
 const settings = ['Profile', 'Your Decks', 'Logout'];
 
 interface Props{
   isLoggedIn: boolean;
+  setLoggedIn: (value: boolean) => void;
+
 }
 
-function NavBar({isLoggedIn}: Props) {
+function NavBar({isLoggedIn, setLoggedIn}: Props) {
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -47,6 +48,21 @@ function NavBar({isLoggedIn}: Props) {
 
   const Login= () => {
     navigate("/login");
+  }
+
+  const handleCreate= () => {
+    navigate("/create");
+  }
+
+  const handleSettingClick= (setting: string) => {
+    handleCloseUserMenu();
+    if(setting === 'Logout'){
+      sessionStorage.clear();
+      setLoggedIn(false);
+    }
+    else if(setting === 'Your Decks'){
+      navigate("/decks");
+    }
   }
 
   return (
@@ -104,7 +120,7 @@ function NavBar({isLoggedIn}: Props) {
             <>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', gap: '1em'} }}>
               <Button
-                onClick={handleCloseNavMenu}
+                onClick={handleCreate}
                 sx={{ my: 2, color: 'black', display: 'block', border: '1px solid black', marginRight: '10%'}}
               >
                 + Create
@@ -112,8 +128,15 @@ function NavBar({isLoggedIn}: Props) {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, paddingLeft: '1em'}}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <IconButton 
+              onClick={handleOpenUserMenu} 
+              sx={{ p: 0,
+                    paddingLeft: '1em',
+                    '&:hover': {
+                      backgroundColor: 'transparent', // optional, to remove hover bg
+                      boxShadow: 'none',
+            },}}>
+              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{ boxShadow: 'none' }} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -133,7 +156,7 @@ function NavBar({isLoggedIn}: Props) {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
                 <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
               </MenuItem>
             ))}
