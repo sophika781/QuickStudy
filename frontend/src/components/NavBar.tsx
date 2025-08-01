@@ -135,7 +135,12 @@ function NavBar({isLoggedIn, setLoggedIn}: Props) {
                     '&:hover': {
                       backgroundColor: 'transparent', // optional, to remove hover bg
                       boxShadow: 'none',
-            },}}>
+                    },
+                    '&:onclick': {
+                      backgroundColor: 'transparent', // optional, to remove hover bg
+                      boxShadow: 'none',
+                    }
+            ,}}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{ boxShadow: 'none' }} />
             </IconButton>
           </Tooltip>
